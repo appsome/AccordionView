@@ -21,7 +21,7 @@
 
 @implementation AccordionView
 
-@synthesize selectedIndex, isHorizontal;
+@synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -40,6 +40,9 @@
         
         self.userInteractionEnabled = YES;
         scrollView.userInteractionEnabled = YES;
+        
+        animationDuration = 0.3;
+        animationCurve = UIViewAnimationCurveEaseIn;
     }
     
     return self;
@@ -68,6 +71,11 @@
         
         [scrollView addSubview:aHeader];
         [scrollView addSubview:aView];
+        
+        if ([aHeader respondsToSelector:@selector(addTarget:action:forControlEvents:)]) {
+            [aHeader setTag:[headers count] - 1];
+            [aHeader addTarget:self action:@selector(touchDown:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
 }
 
@@ -106,8 +114,8 @@
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDelegate:self];
                 [UIView setAnimationDidStopSelector:@selector(animationDone)];
-                [UIView setAnimationDuration:0.3];
-                [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+                [UIView setAnimationDuration:self.animationDuration];
+                [UIView setAnimationCurve:self.animationCurve];
                 [UIView setAnimationBeginsFromCurrentState:YES];
                 [aHeader setFrame:headerFrame];
                 [aView setFrame:viewFrame];
@@ -116,6 +124,10 @@
             [scrollView setContentSize:CGSizeMake([self frame].size.width, height)];
         }
     }
+}
+
+- (void)touchDown:(id)sender {
+    [self setSelectedIndex:[sender tag]];
 }
 
 - (void)animationDone {

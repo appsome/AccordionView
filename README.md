@@ -21,17 +21,13 @@ Usage
 
     [accordion setSelectedIndex:0];
 
-Changing selected index is done manualy (you have to hook touch event for every header, so it sets new index).
-
 Todo
 ----
-* Changing touched index inside AccordionView
 * Horizontal view
-* Converting internal variables to properties
 
 LICENCE
 -------
 
-Copyright (C) 2011 Wojtek Siudzinski <admin@suda.pl>, Appsome <appsome.co>
+Copyright (C) 2011 Wojtek Siudzinski <admin@suda.pl>, [Appsome](http://appsome.co)
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0

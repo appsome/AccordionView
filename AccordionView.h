@@ -31,5 +31,7 @@
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (readonly) BOOL isHorizontal;
+@property (nonatomic, assign) NSTimeInterval animationDuration;
+@property (nonatomic, assign) UIViewAnimationCurve animationCurve;
 
 @end
