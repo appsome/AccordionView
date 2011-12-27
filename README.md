@@ -19,7 +19,10 @@ Usage
 
     // ... add more panels
 
-    [accordion setSelectedIndex:0];
+    [accordion setNeedsLayout];
+
+    // Set this if you want to allow multiple selection
+    [accordion setAllowsMultipleSelection:YES];
 
 Todo
 ----

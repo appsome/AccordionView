@@ -28,6 +28,7 @@
 }
 
 - (void)addHeader:(id)aHeader withView:(id)aView;
+- (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index;
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (readonly) BOOL isHorizontal;

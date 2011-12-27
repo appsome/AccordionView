@@ -126,6 +126,12 @@
     }
 }
 
+- (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index {
+    if (index >= [views count]) return;
+    
+    [originalSizes replaceObjectAtIndex:index withObject:[NSValue valueWithCGSize:size]];
+}
+
 - (void)touchDown:(id)sender {
     [self setSelectedIndex:[sender tag]];
 }
