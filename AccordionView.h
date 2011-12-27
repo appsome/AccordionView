@@ -29,10 +29,12 @@
 
 - (void)addHeader:(id)aHeader withView:(id)aView;
 - (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index;
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView;
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (readonly) BOOL isHorizontal;
 @property (nonatomic, assign) NSTimeInterval animationDuration;
 @property (nonatomic, assign) UIViewAnimationCurve animationCurve;
-
+@property (nonatomic, assign) BOOL allowsMultipleSelection;
+@property (nonatomic, strong) NSIndexSet *selectionIndexes;
 @end

@@ -22,6 +22,7 @@
 @implementation AccordionView
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
+@synthesize allowsMultipleSelection, selectionIndexes;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -36,13 +37,18 @@
         scrollView.backgroundColor = [UIColor clearColor];
         [self addSubview:scrollView];
         
-        selectedIndex = -1;
-        
         self.userInteractionEnabled = YES;
         scrollView.userInteractionEnabled = YES;
         
         animationDuration = 0.3;
         animationCurve = UIViewAnimationCurveEaseIn;
+        
+        self.autoresizesSubviews = NO;
+        scrollView.autoresizesSubviews = NO;
+        scrollView.scrollsToTop = NO;
+        scrollView.delegate = self;
+        
+        self.allowsMultipleSelection = NO;
     }
     
     return self;
@@ -50,9 +56,12 @@
 
 - (void)addHeader:(id)aHeader withView:(id)aView {
     if ((aHeader != nil) && (aView != nil)) {
-        [headers addObject:aHeader];
-        [views addObject:aView];
+        [headers addObject:aHeader];        
+        [views addObject:aView];        
         [originalSizes addObject:[NSValue valueWithCGSize:[aView frame].size]];
+        
+        [aView setAutoresizingMask:UIViewAutoresizingNone];
+        [aView setClipsToBounds:YES];
         
         CGRect frame = [aHeader frame];
         
@@ -69,22 +78,75 @@
             [aView setFrame:frame];
         }
         
-        [scrollView addSubview:aHeader];
         [scrollView addSubview:aView];
+        [scrollView addSubview:aHeader];
         
         if ([aHeader respondsToSelector:@selector(addTarget:action:forControlEvents:)]) {
             [aHeader setTag:[headers count] - 1];
             [aHeader addTarget:self action:@selector(touchDown:) forControlEvents:UIControlEventTouchUpInside];
         }
+        
+        if ([selectionIndexes count] == 0) {
+            [self setSelectedIndex:0];
+        }
     }
 }
 
-- (void)setSelectedIndex:(NSInteger)aSelectedIndex {
-    if (aSelectedIndex >= [views count]) return;
-    if (aSelectedIndex == selectedIndex) return;
-    selectedIndex = aSelectedIndex;
-    if (selectedIndex == -1) return;
+- (void)setSelectionIndexes:(NSIndexSet *)aSelectionIndexes {
+    if ([headers count] == 0) return;
+    if (!allowsMultipleSelection && [aSelectionIndexes count] > 1) {
+        aSelectionIndexes = [NSIndexSet indexSetWithIndex:[aSelectionIndexes firstIndex]];
+    }
     
+    NSMutableIndexSet *cleanIndexes = [NSMutableIndexSet new];
+    [aSelectionIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        if (idx > [headers count] - 1) return;
+        
+        [cleanIndexes addIndex:idx];
+    }];
+
+    selectionIndexes = cleanIndexes;
+    [self setNeedsLayout];
+}
+
+- (void)setSelectedIndex:(NSInteger)aSelectedIndex {
+    [self setSelectionIndexes:[NSIndexSet indexSetWithIndex:aSelectedIndex]];    
+}
+
+- (NSInteger)selectedIndex {
+    return [selectionIndexes firstIndex];
+}
+
+- (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index {
+    if (index >= [views count]) return;
+    
+    [originalSizes replaceObjectAtIndex:index withObject:[NSValue valueWithCGSize:size]];
+    
+    if ([selectionIndexes containsIndex:index]) [self setNeedsLayout];
+}
+
+- (void)touchDown:(id)sender {
+    if (allowsMultipleSelection) {
+        NSMutableIndexSet *mis = [selectionIndexes mutableCopy];
+        if ([selectionIndexes containsIndex:[sender tag]]) {
+            [mis removeIndex:[sender tag]];
+        } else {
+            [mis addIndex:[sender tag]];
+        }
+        
+        [self setSelectionIndexes:mis];
+    } else {
+        [self setSelectedIndex:[sender tag]];
+    }
+}
+
+- (void)animationDone {
+    for (int i=0; i<[views count]; i++) {
+        if (![selectionIndexes containsIndex:i]) [[views objectAtIndex:i] setHidden:YES];
+    }
+}
+
+- (void)layoutSubviews {
     if (self.isHorizontal) {
         // TODO
     } else {
@@ -92,7 +154,7 @@
         for (int i=0; i<[views count]; i++) {
             id aHeader = [headers objectAtIndex:i];
             id aView = [views objectAtIndex:i];
-        
+            
             CGSize originalSize = [[originalSizes objectAtIndex:i] CGSizeValue];
             CGRect viewFrame = [aView frame];
             CGRect headerFrame = [aHeader frame];
@@ -100,15 +162,15 @@
             height += headerFrame.size.height;
             viewFrame.origin.y = height;
             
-            if (i == aSelectedIndex) {
+            if ([selectionIndexes containsIndex:i]) {
                 viewFrame.size.height = originalSize.height;
+                [aView setFrame:CGRectMake(0, viewFrame.origin.y, [self frame].size.width, 0)];
                 [aView setHidden:NO];
             } else {
                 viewFrame.size.height = 0;
             }
             
             height += viewFrame.size.height;
-            
             
             if (!CGRectEqualToRect([aHeader frame], headerFrame) || !CGRectEqualToRect([aView frame], viewFrame)) {
                 [UIView beginAnimations:nil context:nil];
@@ -117,28 +179,55 @@
                 [UIView setAnimationDuration:self.animationDuration];
                 [UIView setAnimationCurve:self.animationCurve];
                 [UIView setAnimationBeginsFromCurrentState:YES];
-                [aHeader setFrame:headerFrame];
+                [aHeader setFrame:headerFrame];                
                 [aView setFrame:viewFrame];
                 [UIView commitAnimations];
             }
-            [scrollView setContentSize:CGSizeMake([self frame].size.width, height)];
         }
+        
+        CGPoint offset = scrollView.contentOffset;
+        [scrollView setContentSize:CGSizeMake([self frame].size.width, height)];
+        if (offset.y + scrollView.frame.size.height > height) {
+            offset.y = height - scrollView.frame.size.height;
+            if (offset.y < 0) {
+                offset.y = 0;
+            }
+        }
+        [scrollView setContentOffset:offset animated:YES];
+        [self scrollViewDidScroll:scrollView];
     }
 }
 
-- (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index {
-    if (index >= [views count]) return;
-    
-    [originalSizes replaceObjectAtIndex:index withObject:[NSValue valueWithCGSize:size]];
-}
+#pragma mark UIScrollView delegate
 
-- (void)touchDown:(id)sender {
-    [self setSelectedIndex:[sender tag]];
-}
-
-- (void)animationDone {
-    for (int i=0; i<[views count]; i++) {
-        if (i != selectedIndex) [[views objectAtIndex:i] setHidden:YES];
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    int i = 0;
+    for (UIView *view in views) {
+        if (self.isHorizontal) {
+            // TODO
+        } else {
+            if (view.frame.size.height > 0) {
+                UIView *header = [headers objectAtIndex:i];
+                CGRect content = view.frame;
+                content.origin.y -= header.frame.size.height;
+                content.size.height += header.frame.size.height;
+                //content.size.height += 1;
+                
+                CGRect frame = header.frame;                
+                if (CGRectContainsPoint(content, aScrollView.contentOffset)) {
+                    if (aScrollView.contentOffset.y < content.origin.y + content.size.height - frame.size.height) {
+                        frame.origin.y = aScrollView.contentOffset.y;
+                    } else {
+                        frame.origin.y = content.origin.y + content.size.height - frame.size.height;
+                    }
+                    
+                } else {
+                    frame.origin.y = view.frame.origin.y - frame.size.height;
+                }
+                header.frame = frame;
+            }
+        }
+        i++;
     }
 }
 
