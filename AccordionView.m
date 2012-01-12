@@ -186,7 +186,15 @@
         }
         
         CGPoint offset = scrollView.contentOffset;
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:self.animationDuration];
+        [UIView setAnimationCurve:self.animationCurve];
+        [UIView setAnimationBeginsFromCurrentState:YES];
         [scrollView setContentSize:CGSizeMake([self frame].size.width, height)];
+        [UIView commitAnimations];
+
+        
         if (offset.y + scrollView.frame.size.height > height) {
             offset.y = height - scrollView.frame.size.height;
             if (offset.y < 0) {
@@ -211,7 +219,6 @@
                 CGRect content = view.frame;
                 content.origin.y -= header.frame.size.height;
                 content.size.height += header.frame.size.height;
-                //content.size.height += 1;
                 
                 CGRect frame = header.frame;                
                 if (CGRectContainsPoint(content, aScrollView.contentOffset)) {
