@@ -22,7 +22,7 @@
 @implementation AccordionView
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
-@synthesize allowsMultipleSelection, selectionIndexes;
+@synthesize allowsMultipleSelection, selectionIndexes, delegate;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -107,6 +107,10 @@
 
     selectionIndexes = cleanIndexes;
     [self setNeedsLayout];
+    
+    if ([delegate respondsToSelector:@selector(accordion:didChangeSelection:)]) {
+        [delegate accordion:self didChangeSelection:self.selectionIndexes];
+    }
 }
 
 - (void)setSelectedIndex:(NSInteger)aSelectedIndex {

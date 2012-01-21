@@ -19,6 +19,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class AccordionView;
+@protocol AccordionViewDelegate <NSObject>
+@optional
+- (void)accordion:(AccordionView *)accordion didChangeSelection:(NSIndexSet *)selection;
+@end
+
 @interface AccordionView : UIView {
     NSMutableArray *views;
     NSMutableArray *headers;
@@ -37,4 +43,6 @@
 @property (nonatomic, assign) UIViewAnimationCurve animationCurve;
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, strong) NSIndexSet *selectionIndexes;
+@property (nonatomic, strong) id <AccordionViewDelegate> delegate;
+
 @end
