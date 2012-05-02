@@ -10,7 +10,7 @@ Usage
 
     // Only height is taken into account, so other parameters are just dummy
     UIButton *header1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 30)];
-    [header1.titleLabel setText:@"First row"];
+    [header1 setTitle:@"First row" forState:UIControlStateNormal];
 
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
     // ... add subviews to view1
