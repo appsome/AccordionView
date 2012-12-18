@@ -25,7 +25,7 @@
 - (void)accordion:(AccordionView *)accordion didChangeSelection:(NSIndexSet *)selection;
 @end
 
-@interface AccordionView : UIView {
+@interface AccordionView : UIView <UIScrollViewDelegate> {
     NSMutableArray *views;
     NSMutableArray *headers;
     NSMutableArray *originalSizes;
