@@ -15,7 +15,7 @@
 		9C7CA5C514E6D2210008A61F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CA5C414E6D2210008A61F /* AppDelegate.m */; };
 		9C7CA5C814E6D2210008A61F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CA5C714E6D2210008A61F /* ViewController.m */; };
 		9C7CA5CB14E6D2210008A61F /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C7CA5C914E6D2210008A61F /* ViewController.xib */; };
-		9C7CA5D314E6D25D0008A61F /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7CA5D214E6D25D0008A61F /* AccordionView.m */; };
+		9CC97E3B1680E6B9007FF6F9 /* AccordionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CC97E3A1680E6B9007FF6F9 /* AccordionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +32,8 @@
 		9C7CA5C614E6D2210008A61F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9C7CA5C714E6D2210008A61F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9C7CA5CA14E6D2210008A61F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		9C7CA5D114E6D25D0008A61F /* AccordionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccordionView.h; sourceTree = "<group>"; };
-		9C7CA5D214E6D25D0008A61F /* AccordionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccordionView.m; sourceTree = "<group>"; };
+		9CC97E391680E6B9007FF6F9 /* AccordionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccordionView.h; path = ../../AccordionView.h; sourceTree = "<group>"; };
+		9CC97E3A1680E6B9007FF6F9 /* AccordionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccordionView.m; path = ../../AccordionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +82,10 @@
 			children = (
 				9C7CA5C314E6D2210008A61F /* AppDelegate.h */,
 				9C7CA5C414E6D2210008A61F /* AppDelegate.m */,
-				9C7CA5D114E6D25D0008A61F /* AccordionView.h */,
-				9C7CA5D214E6D25D0008A61F /* AccordionView.m */,
 				9C7CA5C614E6D2210008A61F /* ViewController.h */,
 				9C7CA5C714E6D2210008A61F /* ViewController.m */,
 				9C7CA5C914E6D2210008A61F /* ViewController.xib */,
+				9CC97E381680E6A9007FF6F9 /* Lib */,
 				9C7CA5BB14E6D2200008A61F /* Supporting Files */,
 			);
 			path = test;
@@ -101,6 +100,15 @@
 				9C7CA5C214E6D2210008A61F /* test-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CC97E381680E6A9007FF6F9 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				9CC97E391680E6B9007FF6F9 /* AccordionView.h */,
+				9CC97E3A1680E6B9007FF6F9 /* AccordionView.m */,
+			);
+			name = Lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,7 +176,7 @@
 				9C7CA5C114E6D2210008A61F /* main.m in Sources */,
 				9C7CA5C514E6D2210008A61F /* AppDelegate.m in Sources */,
 				9C7CA5C814E6D2210008A61F /* ViewController.m in Sources */,
-				9C7CA5D314E6D25D0008A61F /* AccordionView.m in Sources */,
+				9CC97E3B1680E6B9007FF6F9 /* AccordionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +288,7 @@
 				9C7CA5D014E6D2210008A61F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
