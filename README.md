@@ -31,6 +31,6 @@ Todo
 LICENCE
 -------
 
-Copyright (C) 2011 Wojtek Siudzinski <admin@suda.pl>, [Appsome](http://appsome.co)
+Copyright (C) 2011-2013 Wojtek Siudzinski <admin@suda.pl>, [Appsome](http://appsome.co)
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
