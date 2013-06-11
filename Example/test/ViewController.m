@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    AccordionView *accordion = [[AccordionView alloc] initWithFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height)];
+    accordion = [[AccordionView alloc] initWithFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height)];
     
     [self.view addSubview:accordion];
     self.view.backgroundColor = [UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1.000];
@@ -35,8 +35,14 @@
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
     view1.backgroundColor = [UIColor colorWithRed:0.102 green:0.737 blue:0.612 alpha:1.000];
     
-    [accordion addHeader:header1 withView:view1];
+    UIButton *removeSecondRowButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 75, 200, 50)];
+    [removeSecondRowButton setTitle:@"Remove second row" forState:UIControlStateNormal];
+    removeSecondRowButton.backgroundColor = [UIColor colorWithRed:0.906 green:0.298 blue:0.235 alpha:1.000];
+    [removeSecondRowButton addTarget:self action:@selector(removeSecondRow) forControlEvents:UIControlEventTouchDown];
+    [view1 addSubview:removeSecondRowButton];
     
+    [accordion addHeader:header1 withView:view1];
+
     
     UIButton *header2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 30)];
     [header2 setTitle:@"Second row" forState:UIControlStateNormal];
@@ -62,6 +68,10 @@
     
     // Set this if you want to allow multiple selection
     [accordion setAllowsMultipleSelection:YES];
+}
+
+- (void)removeSecondRow {
+    [accordion removeHeaderAtIndex:1];
 }
 
 - (void)viewDidUnload

@@ -92,6 +92,31 @@
     }
 }
 
+- (void)removeHeaderAtIndex:(NSInteger)index {
+    if (index > [headers count] - 1) return;
+    
+    NSMutableIndexSet *cleanIndexes = [NSMutableIndexSet new];
+    [selectionIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        if (idx == index) return;
+        if (idx > index) idx--;
+        
+        [cleanIndexes addIndex:idx];
+    }];
+    selectionIndexes = cleanIndexes;
+    
+    UIView *aHeader = [headers objectAtIndex:index];
+    [aHeader removeFromSuperview];
+    [headers removeObjectAtIndex:index];
+    
+    UIView *aView = [views objectAtIndex:index];
+    [aView removeFromSuperview];
+    [views removeObjectAtIndex:index];
+    
+    [originalSizes removeObjectAtIndex:index];
+    
+    [self setNeedsLayout];
+}
+
 - (void)setSelectionIndexes:(NSIndexSet *)aSelectionIndexes {
     if ([headers count] == 0) return;
     if (!allowsMultipleSelection && [aSelectionIndexes count] > 1) {

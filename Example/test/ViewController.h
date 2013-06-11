@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #include "AccordionView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController {
+    AccordionView *accordion;
+}
 
 @end
