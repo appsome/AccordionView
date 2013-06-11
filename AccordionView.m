@@ -94,7 +94,7 @@
 
 - (void)removeHeaderAtIndex:(NSInteger)index {
     if (index > [headers count] - 1) return;
-    
+
     NSMutableIndexSet *cleanIndexes = [NSMutableIndexSet new];
     [selectionIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         if (idx == index) return;
@@ -102,11 +102,16 @@
         
         [cleanIndexes addIndex:idx];
     }];
-    selectionIndexes = cleanIndexes;
     
+    for (UIView *aHeader in headers) {
+        if (aHeader.tag > index) {
+            aHeader.tag--;
+        }
+    }
     UIView *aHeader = [headers objectAtIndex:index];
     [aHeader removeFromSuperview];
     [headers removeObjectAtIndex:index];
+    
     
     UIView *aView = [views objectAtIndex:index];
     [aView removeFromSuperview];
@@ -114,7 +119,7 @@
     
     [originalSizes removeObjectAtIndex:index];
     
-    [self setNeedsLayout];
+    [self setSelectionIndexes:cleanIndexes];
 }
 
 - (void)setSelectionIndexes:(NSIndexSet *)aSelectionIndexes {
