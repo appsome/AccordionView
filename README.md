@@ -24,6 +24,9 @@ Usage
     // Set this if you want to allow multiple selection
     [accordion setAllowsMultipleSelection:YES];
 
+    // Remove section at index 1
+    [accordion removeHeaderAtIndex:1];
+
 Todo
 ----
 * Horizontal view
