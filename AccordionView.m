@@ -170,7 +170,12 @@
         
         [self setSelectionIndexes:mis];
     } else {
-        [self setSelectedIndex:[sender tag]];
+        // If the touched section is already opened, close it.
+        if ([selectionIndexes firstIndex] == [sender tag]) {
+            [self setSelectionIndexes:[NSIndexSet indexSet]];
+        } else {
+            [self setSelectedIndex:[sender tag]];
+        }
     }
 }
 
