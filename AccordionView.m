@@ -22,7 +22,7 @@
 @implementation AccordionView
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
-@synthesize allowsMultipleSelection, selectionIndexes, delegate;
+@synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -49,6 +49,8 @@
         scrollView.delegate = self;
         
         self.allowsMultipleSelection = NO;
+
+        self.startsClosed = NO;
     }
     
     return self;
@@ -86,7 +88,7 @@
             [aHeader addTarget:self action:@selector(touchDown:) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        if ([selectionIndexes count] == 0) {
+        if (!self.startsClosed && [selectionIndexes count] == 0) {
             [self setSelectedIndex:0];
         }
     }
@@ -157,6 +159,14 @@
     [originalSizes replaceObjectAtIndex:index withObject:[NSValue valueWithCGSize:size]];
     
     if ([selectionIndexes containsIndex:index]) [self setNeedsLayout];
+}
+
+- (void)setStartsClosed:(BOOL)itStartsClosed {
+    if (itStartsClosed) {
+        [self setSelectionIndexes:[NSIndexSet indexSet]];
+    }
+
+    startsClosed = itStartsClosed;
 }
 
 - (void)touchDown:(id)sender {

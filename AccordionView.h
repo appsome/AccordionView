@@ -45,5 +45,6 @@
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, strong) NSIndexSet *selectionIndexes;
 @property (nonatomic, strong) id <AccordionViewDelegate> delegate;
+@property BOOL startsClosed;
 
 @end
