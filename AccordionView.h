@@ -46,5 +46,6 @@
 @property (nonatomic, strong) NSIndexSet *selectionIndexes;
 @property (nonatomic, strong) id <AccordionViewDelegate> delegate;
 @property (nonatomic, assign) BOOL startsClosed;
+@property (nonatomic, assign) BOOL allowsEmptySelection;
 
 @end

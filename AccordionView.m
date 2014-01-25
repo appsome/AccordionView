@@ -22,7 +22,7 @@
 @implementation AccordionView
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
-@synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed;
+@synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed, allowsEmptySelection;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -51,6 +51,8 @@
         self.allowsMultipleSelection = NO;
 
         self.startsClosed = NO;
+        
+        self.allowsEmptySelection = YES;
     }
     
     return self;
@@ -173,7 +175,9 @@
     if (allowsMultipleSelection) {
         NSMutableIndexSet *mis = [selectionIndexes mutableCopy];
         if ([selectionIndexes containsIndex:[sender tag]]) {
-            [mis removeIndex:[sender tag]];
+            if (self.allowsEmptySelection || [selectionIndexes count] > 1) {
+                [mis removeIndex:[sender tag]];
+            }
         } else {
             [mis addIndex:[sender tag]];
         }
@@ -181,7 +185,7 @@
         [self setSelectionIndexes:mis];
     } else {
         // If the touched section is already opened, close it.
-        if ([selectionIndexes firstIndex] == [sender tag]) {
+        if (([selectionIndexes firstIndex] == [sender tag]) && self.allowsEmptySelection) {
             [self setSelectionIndexes:[NSIndexSet indexSet]];
         } else {
             [self setSelectedIndex:[sender tag]];
