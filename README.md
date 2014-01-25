@@ -24,6 +24,9 @@ Usage
     // Set this if you want to allow multiple selection
     [accordion setAllowsMultipleSelection:YES];
 
+    // Set this to NO if you want to have at least one open section at all times
+    [accordion setAllowsEmptySelection:YES];
+
     // Remove section at index 1
     [accordion removeHeaderAtIndex:1];
 
