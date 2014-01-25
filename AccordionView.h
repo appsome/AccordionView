@@ -33,7 +33,7 @@
     UIScrollView *scrollView;
 }
 
-- (void)addHeader:(id)aHeader withView:(id)aView;
+- (void)addHeader:(UIControl *)aHeader withView:(id)aView;
 - (void)removeHeaderAtIndex:(NSInteger)index;
 - (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index;
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView;

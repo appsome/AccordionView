@@ -58,7 +58,7 @@
     return self;
 }
 
-- (void)addHeader:(id)aHeader withView:(id)aView {
+- (void)addHeader:(UIControl *)aHeader withView:(id)aView {
     if ((aHeader != nil) && (aView != nil)) {
         [headers addObject:aHeader];        
         [views addObject:aView];        
