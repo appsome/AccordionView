@@ -24,7 +24,7 @@
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
 @synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed, allowsEmptySelection;
 
--(void)myInit{
+-(void)initAccordion{
     views = [NSMutableArray new];
     headers = [NSMutableArray new];
     originalSizes = [NSMutableArray new];
@@ -56,7 +56,7 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self myInit];
+        [self initAccordion];
     }
     
     return self;
@@ -67,7 +67,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self myInit];
+        [self initAccordion];
     }
     
     return self;
