@@ -24,35 +24,50 @@
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
 @synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed, allowsEmptySelection;
 
+-(void)initAccordion{
+    views = [NSMutableArray new];
+    headers = [NSMutableArray new];
+    originalSizes = [NSMutableArray new];
+    
+    self.backgroundColor = [UIColor clearColor];
+    
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
+    scrollView.backgroundColor = [UIColor clearColor];
+    [self addSubview:scrollView];
+    
+    self.userInteractionEnabled = YES;
+    scrollView.userInteractionEnabled = YES;
+    
+    animationDuration = 0.3;
+    animationCurve = UIViewAnimationCurveEaseIn;
+    
+    self.autoresizesSubviews = NO;
+    scrollView.autoresizesSubviews = NO;
+    scrollView.scrollsToTop = NO;
+    scrollView.delegate = self;
+    
+    self.allowsMultipleSelection = NO;
+    
+    self.startsClosed = NO;
+    
+    self.allowsEmptySelection = YES;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        views = [NSMutableArray new];
-        headers = [NSMutableArray new];
-        originalSizes = [NSMutableArray new];
-        
-        self.backgroundColor = [UIColor clearColor];
-        
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
-        scrollView.backgroundColor = [UIColor clearColor];
-        [self addSubview:scrollView];
-        
-        self.userInteractionEnabled = YES;
-        scrollView.userInteractionEnabled = YES;
-        
-        animationDuration = 0.3;
-        animationCurve = UIViewAnimationCurveEaseIn;
-        
-        self.autoresizesSubviews = NO;
-        scrollView.autoresizesSubviews = NO;
-        scrollView.scrollsToTop = NO;
-        scrollView.delegate = self;
-        
-        self.allowsMultipleSelection = NO;
-
-        self.startsClosed = NO;
-        
-        self.allowsEmptySelection = YES;
+        [self initAccordion];
+    }
+    
+    return self;
+}
+/***
+ NIB constructor
+ **/
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initAccordion];
     }
     
     return self;
