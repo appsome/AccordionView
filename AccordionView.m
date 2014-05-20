@@ -31,18 +31,6 @@
     
     self.backgroundColor = [UIColor clearColor];
     
-    CGRect f = self.frame;
-    CGFloat screenHeight = [[UIScreen mainScreen] applicationFrame].size.height;
-    if (screenHeight==460) {
-        //we have a 3.5 inch screen
-        f.size.height = 250;
-        
-    } else {
-        f.size.height = 342;
-    }
-    
-    self.frame = f;
-    
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
     scrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:scrollView];
