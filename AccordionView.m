@@ -259,6 +259,11 @@
     }
 }
 
+- (void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    scrollView.frame = frame;
+}
+
 #pragma mark UIScrollView delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
