@@ -34,7 +34,7 @@ Todo
 ----
 * Horizontal view
 
-LICENCE
+LICENSE
 -------
 
 Copyright (C) 2011-2014 Wojtek Siudzinski <admin@suda.pl>, [Appsome](http://appsome.co)
