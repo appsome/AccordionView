@@ -23,6 +23,7 @@
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
 @synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed, allowsEmptySelection;
+@synthesize scrollView;
 
 -(void)initAccordion{
     views = [NSMutableArray new];
