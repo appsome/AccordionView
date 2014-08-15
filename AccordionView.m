@@ -270,6 +270,12 @@
                 offset.y = 0;
             }
         }
+        
+        if([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count)
+        {
+            offset = ((UIButton *)headers[[selectionIndexes firstIndex]]).frame.origin;
+        }
+        
         [scrollView setContentOffset:offset animated:YES];
         [self scrollViewDidScroll:scrollView];
     }
