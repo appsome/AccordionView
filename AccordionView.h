@@ -49,5 +49,6 @@
 @property (nonatomic, strong) id <AccordionViewDelegate> delegate;
 @property (nonatomic, assign) BOOL startsClosed;
 @property (nonatomic, assign) BOOL allowsEmptySelection;
+@property (nonatomic, assign) BOOL autoScrollToTopOnSelect;
 
 @end

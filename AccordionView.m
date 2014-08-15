@@ -271,7 +271,7 @@
             }
         }
         
-        if([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count)
+        if([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count && self.autoScrollToTopOnSelect)
         {
             offset = ((UIButton *)headers[[selectionIndexes firstIndex]]).frame.origin;
         }
