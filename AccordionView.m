@@ -276,9 +276,9 @@
             }
         }
         
-        if([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count && self.autoScrollToTopOnSelect)
+        if ([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count && self.autoScrollToTopOnSelect)
         {
-            offset = ((UIButton *)headers[[selectionIndexes firstIndex]]).frame.origin;
+//            offset = ((UIButton *)headers[[selectionIndexes firstIndex]]).frame.origin;
         }
         
         [scrollView setContentOffset:offset animated:YES];
