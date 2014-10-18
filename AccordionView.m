@@ -23,6 +23,7 @@
 
 @synthesize selectedIndex, isHorizontal, animationDuration, animationCurve;
 @synthesize allowsMultipleSelection, selectionIndexes, delegate, startsClosed, allowsEmptySelection;
+@synthesize scrollView;
 
 -(void)initAccordion{
     views = [NSMutableArray new];
@@ -274,6 +275,12 @@
                 offset.y = 0;
             }
         }
+        
+        if([selectionIndexes firstIndex] && [selectionIndexes firstIndex] < headers.count && self.autoScrollToTopOnSelect)
+        {
+            offset = ((UIButton *)headers[[selectionIndexes firstIndex]]).frame.origin;
+        }
+        
         [scrollView setContentOffset:offset animated:YES];
         [self scrollViewDidScroll:scrollView];
     }

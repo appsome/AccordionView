@@ -30,13 +30,15 @@
     NSMutableArray *headers;
     NSMutableArray *originalSizes;
     
-    UIScrollView *scrollView;
+    //UIScrollView *scrollView;
 }
 
 - (void)addHeader:(UIControl *)aHeader withView:(id)aView;
 - (void)removeHeaderAtIndex:(NSInteger)index;
 - (void)setOriginalSize:(CGSize)size forIndex:(NSUInteger)index;
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (readonly) BOOL isHorizontal;
@@ -47,5 +49,6 @@
 @property (nonatomic, strong) id <AccordionViewDelegate> delegate;
 @property (nonatomic, assign) BOOL startsClosed;
 @property (nonatomic, assign) BOOL allowsEmptySelection;
+@property (nonatomic, assign) BOOL autoScrollToTopOnSelect;
 
 @end
