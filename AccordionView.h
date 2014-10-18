@@ -29,8 +29,6 @@
     NSMutableArray *views;
     NSMutableArray *headers;
     NSMutableArray *originalSizes;
-    
-    //UIScrollView *scrollView;
 }
 
 - (void)addHeader:(UIControl *)aHeader withView:(id)aView;
