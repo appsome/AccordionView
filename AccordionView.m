@@ -231,9 +231,14 @@
             viewFrame.origin.y = height;
             
             if ([selectionIndexes containsIndex:i]) {
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:self.animationDuration];
+                [UIView setAnimationCurve:self.animationCurve];
+                [UIView setAnimationBeginsFromCurrentState:YES];
                 viewFrame.size.height = originalSize.height;
                 [aView setFrame:CGRectMake(0, viewFrame.origin.y, [self frame].size.width, 0)];
                 [aView setHidden:NO];
+                [UIView commitAnimations];
             } else {
                 viewFrame.size.height = 0;
             }
